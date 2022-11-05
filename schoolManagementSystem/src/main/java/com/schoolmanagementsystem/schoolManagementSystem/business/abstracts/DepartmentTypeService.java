@@ -1,7 +1,21 @@
 package com.schoolmanagementsystem.schoolManagementSystem.business.abstracts;
 
-import com.schoolmanagementsystem.schoolManagementSystem.entities.concretes.DepartmentType;
+import java.util.List;
 
-public interface DepartmentTypeService extends BaseEntityService<DepartmentType>{
+import com.schoolmanagementsystem.schoolManagementSystem.business.requests.departmentTypeRequests.CreateDepartmentTypeRequest;
+import com.schoolmanagementsystem.schoolManagementSystem.business.requests.departmentTypeRequests.DeleteDepartmentTypeRequest;
+import com.schoolmanagementsystem.schoolManagementSystem.business.requests.departmentTypeRequests.UpdateDepartmentTypeRequest;
+import com.schoolmanagementsystem.schoolManagementSystem.business.responses.departmentTypeResponses.GetAllDepartmentTypeResponse;
+import com.schoolmanagementsystem.schoolManagementSystem.business.responses.departmentTypeResponses.GetByIdDepartmentTypeResponse;
 
+public interface DepartmentTypeService {
+	void add(CreateDepartmentTypeRequest createDepartmentTypeRequest);
+
+	void delete(DeleteDepartmentTypeRequest deleteDepartmentTypeRequest);
+
+	void update(UpdateDepartmentTypeRequest updateDepartmentTypeRequest);
+
+	List<GetAllDepartmentTypeResponse> getAll();
+
+	GetByIdDepartmentTypeResponse getById(int id);
 }
