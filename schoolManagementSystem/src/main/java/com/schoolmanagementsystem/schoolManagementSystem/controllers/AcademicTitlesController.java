@@ -16,6 +16,8 @@ import com.schoolmanagementsystem.schoolManagementSystem.business.requests.acade
 import com.schoolmanagementsystem.schoolManagementSystem.business.requests.academicTitleRequests.UpdateAcademicTitleRequest;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.academicTitleResponses.GetAllAcademicTitleResponse;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.academicTitleResponses.GetByIdAcademicTitleResponse;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.DataResult;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.Result;
 
 @RestController
 @RequestMapping("/api/academictitles")
@@ -29,27 +31,27 @@ public class AcademicTitlesController {
 	}
 
 	@PostMapping("/add")
-	public void add(CreateAcademicTitleRequest createAcademicTitleRequest) {
-		this.academicTitleService.add(createAcademicTitleRequest);
+	public Result add(CreateAcademicTitleRequest createAcademicTitleRequest) {
+		return this.academicTitleService.add(createAcademicTitleRequest);
 	}
 
 	@PutMapping("/update")
-	public void update(UpdateAcademicTitleRequest updateAcademicTitleRequest) {
-		this.academicTitleService.update(updateAcademicTitleRequest);
+	public Result update(UpdateAcademicTitleRequest updateAcademicTitleRequest) {
+		return this.academicTitleService.update(updateAcademicTitleRequest);
 	}
 
 	@DeleteMapping("/delete")
-	public void delete(DeleteAcademicTitleRequest deleteAcademicTitleRequest) {
-		this.academicTitleService.delete(deleteAcademicTitleRequest);
+	public Result delete(DeleteAcademicTitleRequest deleteAcademicTitleRequest) {
+		return this.academicTitleService.delete(deleteAcademicTitleRequest);
 	}
 
 	@GetMapping("/getall")
-	public List<GetAllAcademicTitleResponse> getAll() {
+	public DataResult<List<GetAllAcademicTitleResponse>> getAll() {
 		return this.academicTitleService.getAll();
 	}
 
 	@GetMapping("/getbyid")
-	public GetByIdAcademicTitleResponse getById(int id) {
+	public DataResult<GetByIdAcademicTitleResponse> getById(int id) {
 		return this.academicTitleService.getById(id);
 	}
 

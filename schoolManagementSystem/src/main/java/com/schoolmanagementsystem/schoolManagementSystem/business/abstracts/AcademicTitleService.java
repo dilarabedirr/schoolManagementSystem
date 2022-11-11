@@ -7,17 +7,19 @@ import com.schoolmanagementsystem.schoolManagementSystem.business.requests.acade
 import com.schoolmanagementsystem.schoolManagementSystem.business.requests.academicTitleRequests.UpdateAcademicTitleRequest;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.academicTitleResponses.GetAllAcademicTitleResponse;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.academicTitleResponses.GetByIdAcademicTitleResponse;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.DataResult;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.Result;
 
 public interface AcademicTitleService {
 
-	void add(CreateAcademicTitleRequest createAcademicTitleRequest);
+	Result add(CreateAcademicTitleRequest createAcademicTitleRequest);
 
-	void delete(DeleteAcademicTitleRequest deleteAcademicTitleRequest);
+	Result delete(DeleteAcademicTitleRequest deleteAcademicTitleRequest);
 
-	void update(UpdateAcademicTitleRequest updateAcademicTitleRequest);
+	Result update(UpdateAcademicTitleRequest updateAcademicTitleRequest);
 
-	List<GetAllAcademicTitleResponse> getAll();
+	DataResult<List<GetAllAcademicTitleResponse>> getAll();
 
-	GetByIdAcademicTitleResponse getById(int id);
+	DataResult<GetByIdAcademicTitleResponse> getById(int id);
 
 }
