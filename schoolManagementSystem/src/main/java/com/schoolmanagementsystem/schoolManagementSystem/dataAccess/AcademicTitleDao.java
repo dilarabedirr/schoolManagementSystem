@@ -7,5 +7,11 @@ import com.schoolmanagementsystem.schoolManagementSystem.entities.concretes.Acad
 
 @Repository
 public interface AcademicTitleDao extends JpaRepository<AcademicTitle, Integer> {
+	
+	AcademicTitle getByAcademicTitle(String academicTitle);
+
+	AcademicTitle getByShortName(String shortName);
+	
+	boolean existsById(int id);
 
 }

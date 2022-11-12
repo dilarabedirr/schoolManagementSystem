@@ -7,17 +7,19 @@ import com.schoolmanagementsystem.schoolManagementSystem.business.requests.instr
 import com.schoolmanagementsystem.schoolManagementSystem.business.requests.instructorRequests.UpdateInstructorRequest;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.instructorResponses.GetAllInstructorResponse;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.instructorResponses.GetByIdInstructorResponse;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.DataResult;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.Result;
 
 public interface InstructorService {
 
-	void add(CreateInstructorRequest createInstructorRequest);
+	Result add(CreateInstructorRequest createInstructorRequest);
 
-	void delete(DeleteInstructorRequest deleteInstructorRequest);
+	Result delete(DeleteInstructorRequest deleteInstructorRequest);
 
-	void update(UpdateInstructorRequest updateInstructorRequest);
+	Result update(UpdateInstructorRequest updateInstructorRequest);
 
-	List<GetAllInstructorResponse> getAll();
+	DataResult<List<GetAllInstructorResponse>> getAll();
 
-	GetByIdInstructorResponse getById(int id);
+	DataResult<GetByIdInstructorResponse> getById(int id);
 
 }

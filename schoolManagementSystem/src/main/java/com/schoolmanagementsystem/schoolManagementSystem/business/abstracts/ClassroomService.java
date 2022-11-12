@@ -7,15 +7,17 @@ import com.schoolmanagementsystem.schoolManagementSystem.business.requests.class
 import com.schoolmanagementsystem.schoolManagementSystem.business.requests.classroomRequests.UpdateClassroomRequest;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.classroomResponses.GetAllClassroomResponse;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.classroomResponses.GetByIdClassroomResponse;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.DataResult;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.Result;
 
 public interface ClassroomService {
-	void add(CreateClassroomRequest createClassroomRequest);
+	Result add(CreateClassroomRequest createClassroomRequest);
 
-	void delete(DeleteClassroomRequest deleteClassroomRequest);
+	Result delete(DeleteClassroomRequest deleteClassroomRequest);
 
-	void update(UpdateClassroomRequest updateClassroomRequest);
+	Result update(UpdateClassroomRequest updateClassroomRequest);
 
-	List<GetAllClassroomResponse> getAll();
+	DataResult<List<GetAllClassroomResponse>> getAll();
 
-	GetByIdClassroomResponse getById(int id);
+	DataResult<GetByIdClassroomResponse> getById(int id);
 }

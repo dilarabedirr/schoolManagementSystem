@@ -18,6 +18,8 @@ import com.schoolmanagementsystem.schoolManagementSystem.business.requests.class
 import com.schoolmanagementsystem.schoolManagementSystem.business.requests.classroomTypeRequests.UpdateClassroomTypeRequest;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.classroomTypeResponses.GetAllClassroomTypeResponse;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.classroomTypeResponses.GetByIdClassroomTypeResponse;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.DataResult;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.Result;
 
 @RestController
 @RequestMapping("/classroomTypes")
@@ -32,27 +34,27 @@ public class ClassroomTypesController {
 	}
 
 	@PostMapping("/add")
-	public void add(@RequestBody CreateClassroomTypeRequest createClassroomTypeRequest) {
-		classroomTypeService.add(createClassroomTypeRequest);
+	public Result add(@RequestBody CreateClassroomTypeRequest createClassroomTypeRequest) {
+		return classroomTypeService.add(createClassroomTypeRequest);
 	}
 
 	@DeleteMapping("/delete")
-	public void delete(@RequestBody DeleteClassroomTypeRequest deleteClassroomTypeRequest) {
-		classroomTypeService.delete(deleteClassroomTypeRequest);
+	public Result delete(@RequestBody DeleteClassroomTypeRequest deleteClassroomTypeRequest) {
+		return classroomTypeService.delete(deleteClassroomTypeRequest);
 	}
 
 	@PutMapping("/update")
-	public void update(@RequestBody UpdateClassroomTypeRequest updateClassroomTypeRequest) {
-		classroomTypeService.update(updateClassroomTypeRequest);
+	public Result update(@RequestBody UpdateClassroomTypeRequest updateClassroomTypeRequest) {
+		return classroomTypeService.update(updateClassroomTypeRequest);
 	}
 
 	@GetMapping("/getall")
-	public List<GetAllClassroomTypeResponse> getAll() {
+	public DataResult<List<GetAllClassroomTypeResponse>> getAll() {
 		return classroomTypeService.getAll();
 	}
 
 	@GetMapping("/getbyid")
-	public GetByIdClassroomTypeResponse getById(int id) {
+	public DataResult<GetByIdClassroomTypeResponse> getById(int id) {
 		return classroomTypeService.getById(id);
 	}
 

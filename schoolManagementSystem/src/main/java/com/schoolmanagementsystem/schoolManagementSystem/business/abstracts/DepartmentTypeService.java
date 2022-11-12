@@ -7,15 +7,17 @@ import com.schoolmanagementsystem.schoolManagementSystem.business.requests.depar
 import com.schoolmanagementsystem.schoolManagementSystem.business.requests.departmentTypeRequests.UpdateDepartmentTypeRequest;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.departmentTypeResponses.GetAllDepartmentTypeResponse;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.departmentTypeResponses.GetByIdDepartmentTypeResponse;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.DataResult;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.Result;
 
 public interface DepartmentTypeService {
-	void add(CreateDepartmentTypeRequest createDepartmentTypeRequest);
+	Result add(CreateDepartmentTypeRequest createDepartmentTypeRequest);
 
-	void delete(DeleteDepartmentTypeRequest deleteDepartmentTypeRequest);
+	Result delete(DeleteDepartmentTypeRequest deleteDepartmentTypeRequest);
 
-	void update(UpdateDepartmentTypeRequest updateDepartmentTypeRequest);
+	Result update(UpdateDepartmentTypeRequest updateDepartmentTypeRequest);
 
-	List<GetAllDepartmentTypeResponse> getAll();
+	DataResult<List<GetAllDepartmentTypeResponse>> getAll();
 
-	GetByIdDepartmentTypeResponse getById(int id);
+	DataResult<GetByIdDepartmentTypeResponse> getById(int id);
 }

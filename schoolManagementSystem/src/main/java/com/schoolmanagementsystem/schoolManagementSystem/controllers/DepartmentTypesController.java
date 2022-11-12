@@ -17,6 +17,8 @@ import com.schoolmanagementsystem.schoolManagementSystem.business.requests.depar
 import com.schoolmanagementsystem.schoolManagementSystem.business.requests.departmentTypeRequests.UpdateDepartmentTypeRequest;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.departmentTypeResponses.GetAllDepartmentTypeResponse;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.departmentTypeResponses.GetByIdDepartmentTypeResponse;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.DataResult;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.Result;
 
 @RestController
 @RequestMapping("/departmentTypes")
@@ -30,27 +32,27 @@ public class DepartmentTypesController {
 	}
 
 	@PostMapping("/add")
-	public void add(@RequestBody CreateDepartmentTypeRequest createDepartmentTypeRequest) {
-		this.departmentTypeService.add(createDepartmentTypeRequest);
+	public Result add(@RequestBody CreateDepartmentTypeRequest createDepartmentTypeRequest) {
+		return this.departmentTypeService.add(createDepartmentTypeRequest);
 	}
 
 	@DeleteMapping("/delete")
-	public void delete(@RequestBody DeleteDepartmentTypeRequest deleteDepartmentTypeRequest) {
-		this.departmentTypeService.delete(deleteDepartmentTypeRequest);
+	public Result delete(@RequestBody DeleteDepartmentTypeRequest deleteDepartmentTypeRequest) {
+		return this.departmentTypeService.delete(deleteDepartmentTypeRequest);
 	}
 
 	@PutMapping("/update")
-	public void update(@RequestBody UpdateDepartmentTypeRequest updateDepartmentTypeRequest) {
-		this.departmentTypeService.update(updateDepartmentTypeRequest);
+	public Result update(@RequestBody UpdateDepartmentTypeRequest updateDepartmentTypeRequest) {
+		return this.departmentTypeService.update(updateDepartmentTypeRequest);
 	}
 
 	@GetMapping("/getall")
-	public List<GetAllDepartmentTypeResponse> getAll() {
+	public DataResult<List<GetAllDepartmentTypeResponse>> getAll() {
 		return this.departmentTypeService.getAll();
 	}
 
 	@GetMapping("/getbyid")
-	public GetByIdDepartmentTypeResponse getById(int id) {
+	public DataResult<GetByIdDepartmentTypeResponse> getById(int id) {
 		return this.departmentTypeService.getById(id);
 	}
 

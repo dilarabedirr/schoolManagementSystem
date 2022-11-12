@@ -16,6 +16,8 @@ import com.schoolmanagementsystem.schoolManagementSystem.business.requests.instr
 import com.schoolmanagementsystem.schoolManagementSystem.business.requests.instructorRequests.UpdateInstructorRequest;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.instructorResponses.GetAllInstructorResponse;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.instructorResponses.GetByIdInstructorResponse;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.DataResult;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.Result;
 
 @RestController
 @RequestMapping("/instructors")
@@ -29,27 +31,27 @@ public class InstructorsController {
 	}
 
 	@PostMapping("/add")
-	public void add(CreateInstructorRequest createInstructorRequest) {
-		this.instructorService.add(createInstructorRequest);
+	public Result add(CreateInstructorRequest createInstructorRequest) {
+		return this.instructorService.add(createInstructorRequest);
 	}
 
 	@DeleteMapping("/delete")
-	public void delete(DeleteInstructorRequest deleteInstructorRequest) {
-		this.instructorService.delete(deleteInstructorRequest);
+	public Result delete(DeleteInstructorRequest deleteInstructorRequest) {
+		return this.instructorService.delete(deleteInstructorRequest);
 	}
 
 	@PutMapping("/update")
-	public void update(UpdateInstructorRequest updateInstructorRequest) {
-		this.instructorService.update(updateInstructorRequest);
+	public Result update(UpdateInstructorRequest updateInstructorRequest) {
+		return this.instructorService.update(updateInstructorRequest);
 	}
 
 	@GetMapping("/getall")
-	public List<GetAllInstructorResponse> getAll() {
+	public DataResult<List<GetAllInstructorResponse>> getAll() {
 		return this.instructorService.getAll();
 	}
 
 	@GetMapping("/getbyid")
-	public GetByIdInstructorResponse getById(int id) {
+	public DataResult<GetByIdInstructorResponse> getById(int id) {
 		return this.instructorService.getById(id);
 	}
 

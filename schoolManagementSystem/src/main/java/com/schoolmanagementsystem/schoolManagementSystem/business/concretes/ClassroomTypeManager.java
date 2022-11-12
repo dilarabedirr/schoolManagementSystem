@@ -7,12 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.schoolmanagementsystem.schoolManagementSystem.business.abstracts.ClassroomTypeService;
+import com.schoolmanagementsystem.schoolManagementSystem.business.constants.Messages;
 import com.schoolmanagementsystem.schoolManagementSystem.business.requests.classroomTypeRequests.CreateClassroomTypeRequest;
 import com.schoolmanagementsystem.schoolManagementSystem.business.requests.classroomTypeRequests.DeleteClassroomTypeRequest;
 import com.schoolmanagementsystem.schoolManagementSystem.business.requests.classroomTypeRequests.UpdateClassroomTypeRequest;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.classroomTypeResponses.GetAllClassroomTypeResponse;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.classroomTypeResponses.GetByIdClassroomTypeResponse;
 import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.mapping.ModelMapperService;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.DataResult;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.Result;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.SuccessDataResult;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.SuccessResult;
 import com.schoolmanagementsystem.schoolManagementSystem.dataAccess.ClassroomTypeDao;
 import com.schoolmanagementsystem.schoolManagementSystem.entities.concretes.ClassroomType;
 
@@ -29,41 +34,43 @@ public class ClassroomTypeManager implements ClassroomTypeService {
 	}
 
 	@Override
-	public void add(CreateClassroomTypeRequest createClassroomTypeRequest) {
+	public Result add(CreateClassroomTypeRequest createClassroomTypeRequest) {
 		ClassroomType classroomType = modelMapperService.forRequest().map(createClassroomTypeRequest,
 				ClassroomType.class);
 		this.classroomTypeDao.save(classroomType);
+		return new SuccessResult(Messages.CLASSROOM_TYPE_ADDED);
 	}
 
 	@Override
-	public List<GetAllClassroomTypeResponse> getAll() {
+	public DataResult<List<GetAllClassroomTypeResponse>> getAll() {
 		List<ClassroomType> results = this.classroomTypeDao.findAll();
 		List<GetAllClassroomTypeResponse> response = results.stream()
 				.map(classroomType -> modelMapperService.forDto().map(classroomType, GetAllClassroomTypeResponse.class))
 				.collect(Collectors.toList());
-		return response;
+		return new SuccessDataResult<List<GetAllClassroomTypeResponse>>(response, Messages.CLASSROOM_TYPE_GETALL) ;
 	}
 
 	@Override
-	public void delete(DeleteClassroomTypeRequest deleteClassroomTypeRequest) {
+	public Result delete(DeleteClassroomTypeRequest deleteClassroomTypeRequest) {
 		this.classroomTypeDao.deleteById(deleteClassroomTypeRequest.getClassroomTypeId());
+		return new SuccessResult(Messages.CLASSROOM_TYPE_DELETED);
 
 	}
 
 	@Override
-	public void update(UpdateClassroomTypeRequest updateClassroomTypeRequest) {
+	public Result update(UpdateClassroomTypeRequest updateClassroomTypeRequest) {
 		ClassroomType classroomType = modelMapperService.forRequest().map(updateClassroomTypeRequest,
 				ClassroomType.class);
 		this.classroomTypeDao.save(classroomType);
-
+		return new SuccessResult(Messages.CLASSROOM_TYPE_UPDATED);
 	}
 
 	@Override
-	public GetByIdClassroomTypeResponse getById(int id) {
+	public DataResult<GetByIdClassroomTypeResponse> getById(int id) {
 		ClassroomType classroomType = this.classroomTypeDao.findById(id).get();
 		GetByIdClassroomTypeResponse getByIdClassroomTypeResponse = modelMapperService.forDto().map(classroomType,
 				GetByIdClassroomTypeResponse.class);
-		return getByIdClassroomTypeResponse;
+		return new SuccessDataResult<GetByIdClassroomTypeResponse>(getByIdClassroomTypeResponse, Messages.CLASSROOM_TYPE_GETBYID) ;
 	}
 
 }

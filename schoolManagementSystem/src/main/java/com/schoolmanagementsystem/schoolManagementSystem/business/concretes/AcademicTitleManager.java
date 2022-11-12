@@ -16,6 +16,7 @@ import com.schoolmanagementsystem.schoolManagementSystem.business.responses.acad
 import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.business.BusinessRules;
 import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.mapping.ModelMapperService;
 import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.DataResult;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.ErrorDataResult;
 import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.ErrorResult;
 import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.Result;
 import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.SuccessDataResult;
@@ -37,7 +38,8 @@ public class AcademicTitleManager implements AcademicTitleService {
 
 	@Override
 	public Result add(CreateAcademicTitleRequest createAcademicTitleRequest) {
-		Result result = BusinessRules.run(checkIfAcademicTitleExists(createAcademicTitleRequest.getAcademicTitle()));
+		Result result = BusinessRules.run(checkIfAcademicTitleExists(createAcademicTitleRequest.getAcademicTitle()),
+				checkIfShortNameExists(createAcademicTitleRequest.getShortName()));
 		if (result != null) {
 			return result;
 		}
@@ -49,6 +51,11 @@ public class AcademicTitleManager implements AcademicTitleService {
 
 	@Override
 	public Result update(UpdateAcademicTitleRequest updateAcademicTitleRequest) {
+		Result result = BusinessRules.run(checkIfAcademicTitleExistsForUpdate(updateAcademicTitleRequest),checkIfAcademicTitleIdExists(updateAcademicTitleRequest.getAcademicTitleId()),
+				checkIfAcademicTitleIdValid(updateAcademicTitleRequest.getAcademicTitleId()));
+		if (result != null) {
+			return result;
+		}
 		AcademicTitle academicTitle = modelMapperService.forRequest().map(updateAcademicTitleRequest,
 				AcademicTitle.class);
 		this.academicTitleDao.save(academicTitle);
@@ -57,6 +64,11 @@ public class AcademicTitleManager implements AcademicTitleService {
 
 	@Override
 	public Result delete(DeleteAcademicTitleRequest deleteAcademicTitleRequest) {
+		Result result = BusinessRules.run(checkIfAcademicTitleIdExists(deleteAcademicTitleRequest.getAcademicTitleId()),
+				checkIfAcademicTitleIdValid(deleteAcademicTitleRequest.getAcademicTitleId()));
+		if (result != null) {
+			return result;
+		}
 		this.academicTitleDao.deleteById(deleteAcademicTitleRequest.getAcademicTitleId());
 		return new SuccessResult(Messages.ACADEMIC_TITLE_DELETED);
 	}
@@ -72,6 +84,10 @@ public class AcademicTitleManager implements AcademicTitleService {
 
 	@Override
 	public DataResult<GetByIdAcademicTitleResponse> getById(int id) {
+		Result result = BusinessRules.run(checkIfAcademicTitleIdExists(id), checkIfAcademicTitleIdValid(id));
+		if (result != null) {
+			return new ErrorDataResult(result);
+		}
 		AcademicTitle academicTitle = this.academicTitleDao.findById(id).get();
 		GetByIdAcademicTitleResponse response = modelMapperService.forDto().map(academicTitle,
 				GetByIdAcademicTitleResponse.class);
@@ -79,9 +95,40 @@ public class AcademicTitleManager implements AcademicTitleService {
 	}
 
 	private Result checkIfAcademicTitleExists(String name) {
-		var academicTitles = this.academicTitleDao.findAll();
+		AcademicTitle academicTitle = this.academicTitleDao.getByAcademicTitle(name);
+		if (academicTitle != null) {
+			return new ErrorResult(Messages.ACADEMIC_TITLE_EXISTS);
+		}
+		return new SuccessResult();
+	}
+
+	private Result checkIfShortNameExists(String shortName) {
+		AcademicTitle academicTitle = this.academicTitleDao.getByShortName(shortName);
+		if (academicTitle != null) {
+			return new ErrorResult(Messages.ACADEMIC_TITLE_SHORT_NAME_EXISTS);
+		}
+		return new SuccessResult();
+	}
+
+	private Result checkIfAcademicTitleIdExists(int id) {
+		if (!this.academicTitleDao.existsById(id) && id>0) {
+			return new ErrorResult(Messages.ACADEMIC_TITLE_NOT_FOUND);
+		}
+		return new SuccessResult();
+	}
+
+	private Result checkIfAcademicTitleIdValid(int id) {
+		if (id <= 0) {
+			return new ErrorResult(Messages.ACADEMIC_TITLE_ID_IS_NOT_VALID);
+		}
+		return new SuccessResult();
+	}
+
+	private Result checkIfAcademicTitleExistsForUpdate(UpdateAcademicTitleRequest updateAcademicTitleRequest) {
+		List<AcademicTitle> academicTitles = this.academicTitleDao.findAll();
 		for (AcademicTitle academicTitle : academicTitles) {
-			if (academicTitle.getAcademicTitle().equalsIgnoreCase(name)) {
+			if (academicTitle.getAcademicTitle().equals(updateAcademicTitleRequest.getAcademicTitle()) 
+					&& academicTitle.getShortName().equals(updateAcademicTitleRequest.getShortName()) ) {
 				return new ErrorResult(Messages.ACADEMIC_TITLE_EXISTS);
 			}
 		}

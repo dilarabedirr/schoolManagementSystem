@@ -16,6 +16,8 @@ import com.schoolmanagementsystem.schoolManagementSystem.business.requests.depar
 import com.schoolmanagementsystem.schoolManagementSystem.business.requests.departmentRequests.UpdateDepartmentRequest;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.departmentResponses.GetAllDepartmentResponse;
 import com.schoolmanagementsystem.schoolManagementSystem.business.responses.departmentResponses.GetByIdDepartmentResponse;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.DataResult;
+import com.schoolmanagementsystem.schoolManagementSystem.core.utilities.results.Result;
 
 @RestController
 @RequestMapping("/api/departments")
@@ -28,27 +30,27 @@ public class DepartmentsController {
 	}
 
 	@PostMapping("/add")
-	public void add(@RequestBody CreateDepartmentRequest createDepartmentRequest) {
-		this.departmentService.add(createDepartmentRequest);
+	public Result add(@RequestBody CreateDepartmentRequest createDepartmentRequest) {
+		return this.departmentService.add(createDepartmentRequest);
 	}
 
 	@DeleteMapping("/delete")
-	public void delete(@RequestBody DeleteDepartmentRequest deleteDepartmentRequest) {
-		this.departmentService.delete(deleteDepartmentRequest);
+	public Result delete(@RequestBody DeleteDepartmentRequest deleteDepartmentRequest) {
+		return this.departmentService.delete(deleteDepartmentRequest);
 	}
 
 	@PutMapping("/update")
-	public void update(@RequestBody UpdateDepartmentRequest updateDepartmentRequest) {
-		this.departmentService.update(updateDepartmentRequest);
+	public Result update(@RequestBody UpdateDepartmentRequest updateDepartmentRequest) {
+		return this.departmentService.update(updateDepartmentRequest);
 	}
 
 	@GetMapping("/getall")
-	public List<GetAllDepartmentResponse> getAll() {
+	public DataResult<List<GetAllDepartmentResponse>> getAll() {
 		return this.departmentService.getAll();
 	}
 
 	@GetMapping("/getbyid")
-	public GetByIdDepartmentResponse getById(int id) {
+	public DataResult<GetByIdDepartmentResponse> getById(int id) {
 		return this.departmentService.getById(id);
 	}
 
