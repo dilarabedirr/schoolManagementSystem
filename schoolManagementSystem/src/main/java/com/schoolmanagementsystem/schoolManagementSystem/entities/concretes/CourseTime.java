@@ -1,7 +1,5 @@
 package com.schoolmanagementsystem.schoolManagementSystem.entities.concretes;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,39 +7,37 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
-@Table(name = "departments")
+@Entity
+@Table(name="courseTimes")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Department {
-
+public class CourseTime {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "department_id")
-	private int departmentId;
-
-	@Column(name = "department_name")
-	private String departmentName;
+	@Column(name="course_time_id")
+	private int courseTimeId;
+	
+	@Column(name="course_time_status")
+	private boolean courseTimeStatus;
 	
 	@ManyToOne
-	@JoinColumn(name="department_type_id")
-	private DepartmentType departmentType;
+	@JoinColumn(name="department_id")
+	private Department department;
 	
-	@OneToMany(mappedBy= "department")
-	List<Classroom> classrooms;
+	@ManyToOne
+	@JoinColumn(name="day_id")
+	private Day day;
 	
-	@OneToMany(mappedBy="department")
-	List<Instructor> instructors;
-	
-	@OneToMany(mappedBy="department")
-	List<CourseTime> courseTimes;
+	@ManyToOne
+	@JoinColumn(name="hour_id")
+	private Hour hour;
 
 }

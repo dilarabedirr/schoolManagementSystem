@@ -42,4 +42,7 @@ public class Messages {
 	public static String INSTRUCTOR_GETALL = "Eğitmenler listelendi.";
 	public static String INSTRUCTOR_GETBYID = "Eğitmene ait bilgiler listelendi.";
 
+	public static String COURSE_TIME_ADDED = "Bölüme ait zaman bilgisi eklendi.";
+	public static String COURSE_TIME_GETALL = "Bölüme ait zaman bilgileri listelendi.";
+
 }
